@@ -1,6 +1,7 @@
 // Import dependencies
 const Parser = require("rss-parser");
-
+var static = require('node-static');
+var file = new static.Server();
 // const encoding = require("encoding");
 // const iconv = require("iconv-lite");
 
@@ -100,5 +101,8 @@ function isEquivalent(a, b) {
 
 
 
-let port=process.env.PORT||3000;
-app.listen(port);
+require('http').createServer(function(request, response) {
+    request.addListener('end', function() {
+      file.serve(request, response);
+    }).resume();
+  }).listen(process.env.PORT || 3000);
