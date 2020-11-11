@@ -101,8 +101,5 @@ function isEquivalent(a, b) {
 
 
 
-require('http').createServer(function(request, response) {
-    request.addListener('end', function() {
-      file.serve(request, response);
-    }).resume();
-  }).listen(process.env.PORT || 3000);
+let port=process.env.PORT||3000;
+app.listen(port);
