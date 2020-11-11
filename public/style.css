@@ -1,0 +1,19 @@
+body{font-family: Arial, Helvetica, sans-serif;}
+.info  li{
+text-decoration: none;
+list-style: none;
+
+
+
+}
+.info h4{
+   font-size: 19px;
+    
+    
+    
+    }
+.info li span{
+    font-size:16px;
+    font-weight: 600;
+    
+    }

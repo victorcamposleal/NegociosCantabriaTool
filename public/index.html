@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="Latin1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Rss Plataforma de contratación</h1>
+
+    <button onclick="obrasAdministracionEstado()" name="Obras" type="button">Licitaciones de Obras de la Administración
+        General del Estado</button>
+    <section id="infoObras"></section>
+    <br></br>
+
+    <button onclick="suministrosEstado()" name="Suministros" type="button">Licitaciones de Suministros de la
+        Administración
+        General del Estado
+    </button>
+    <section id="infoSuministros"></section>
+    <br></br>
+
+    <button onclick="serviciosEstado()" name="Servicios" type="button">Licitaciones de Servicios de la Administración
+        General del Estado
+    </button>
+    <p id="infoServicios"></p>
+    <br></br>
+
+    <button onclick="concesionObras()" name="Concesión" type="button">Licitaciones de Concesiones de Obras Públicas de
+        la Administración
+        General del Estado
+    </button>
+    <section id="infoConcesion"></section>
+    <br></br>
+
+
+    <button onclick="compraPublicaInnovadora()" name="CompraPública" type="button">Licitaciones de Compra Pública
+        Innovadora
+    </button>
+    <section id="infoCompraPublica"></section>
+    <br></br>
+
+
+
+    <script>
+
+
+
+        fetch(`/data`)
+            .then(function obtenerRespuesta(respuesta) {
+                return respuesta.text();
+            })
+
+            .then(function obtenerDatos(datos) {
+                const resultados = JSON.parse(datos);
+                console.log(resultados);
+                resultadosObras = resultados;
+                resultadosSuministros = resultados;
+                resultadosServicios = resultados;
+                resultadosConcesion = resultados;
+                resultadosCompraPublica = resultados;
+            }
+            );
+
+
+        //1. OBRAS ADMINISTRACIÓN GENERAL DEL ESTADO
+        let resultadosObras;
+        let repetidor = false;
+
+        function obrasAdministracionEstado() {
+            repetidor = !repetidor;
+            document.getElementById("infoObras").innerHTML = "";
+            if (repetidor) {
+
+
+
+                document.getElementById("infoObras").innerHTML = "";
+                for (let i = 0; i < resultadosObras.data.obras.items.length; i++) {
+                    document.getElementById("infoObras").innerHTML += `
+                    <div>
+                        <ul class="info">
+                            <h4><strong> 
+                                ${resultadosObras.data.obras.items[i].title}
+                                </strong></h4>
+                                
+                                <li>
+                                    <span>Descripción:</span>${resultadosObras.data.obras.items[i].contentSnippet}
+                                    </li>
+                                    <li>
+                                        <b>Fecha de publicación:</b> ${resultadosObras.data.obras.items[i].pubDate}
+                                        </li>
+                                        <li>
+                                            <b>Link</b>:
+                                            <a href=" ${resultadosObras.data.obras.items[i].link}">
+                                                ${resultadosObras.data.obras.items[i].link}
+                                                </a>
+                                                </li>
+                                                </ul>
+                                                </div>
+                                                
+                                                `
+                }
+
+            }
+        }
+
+        //2. SUMINISTROS DEL ESTADO
+        let resultadosSuministros; //Outside the function
+        let repetidor2 = false;
+       function suministrosEstado() {
+            repetidor2 = !repetidor2;
+            document.getElementById("infoSuministros").innerHTML = "";
+            if (repetidor2) {
+                document.getElementById("infoSuministros").innerHTML = "";
+
+                for (let i = 0; i < resultadosSuministros.data.suministros.items.length; i++) {
+
+                    document.getElementById("infoSuministros").innerHTML += `
+                    
+                    <div> 
+                        <ul class="info">
+                            <h4><strong> 
+                                ${resultadosSuministros.data.suministros.items[i].title}
+                                </strong></h4>
+                                
+                                
+                                <li>
+                                    <span>Descripción:</span> ${resultadosSuministros.data.suministros.items[i].contentSnippet}
+                                    </li>
+                                    <li>
+                                        <b>Fecha de publicación:</b> ${resultadosSuministros.data.suministros.items[i].pubDate}
+                                        </li>
+                                        <li>
+                                            <b>Link</b>:
+                                            <a href="${resultadosSuministros.data.suministros.items[i].link}">
+                                                ${resultadosSuministros.data.suministros.items[i].link}
+                                                </a>
+                                                </li>
+                                                </ul>
+                                                </div>
+                                                `
+                }
+            }
+        }
+
+
+        //3. SERVICIOS DEL ESTADO
+        let resultadosServicios; //Outside the function
+        let repetidor3= false;
+        
+        function serviciosEstado() {
+            repetidor3=!repetidor3;
+            document.getElementById("infoServicios").innerHTML = "";
+            console.log(resultadosServicios.data.servicios.items)
+if (repetidor3) {
+    
+    document.getElementById("infoServicios").innerHTML = "";
+    
+    for (let i = 0; i < resultadosServicios.data.servicios.items.length; i++) {
+        
+        document.getElementById("infoServicios").innerHTML += `
+        <div> 
+            <ul class="info">
+                <h4><strong> 
+                    ${resultadosServicios.data.servicios.items[i].title}
+                    </strong></h4>
+                    
+                    <li>
+                        <span>Descripción:</span>${resultadosServicios.data.servicios.items[i].contentSnippet}
+                        </li>
+                        <li>
+                            <b>Fecha de publicación:</b>${resultadosServicios.data.servicios.items[i].pubDate}
+                            </li>
+                            <li>
+                                <b>Link</b>:
+                                <a href="${resultadosObras.data.servicios.items[i].link}">
+                                    ${resultadosServicios.data.servicios.items[i].link}
+                                    </a>
+                                    </li>
+                                    </ul>
+                                    </div>
+                                    `
+                                }
+                            }
+                        }
+
+
+        // 4.Concesión de Obras Públicas
+        let resultadosConcesion; //Outside the function
+let repetidor4=false;
+        function concesionObras() {
+            repetidor4=!repetidor4;
+            document.getElementById("infoConcesion").innerHTML = "";
+            if (repetidor4) {
+                document.getElementById("infoConcesion").innerHTML = "";
+    
+    for (let i = 0; i < resultadosConcesion.data.obrasConcesiones.items.length; i++) {
+        
+        document.getElementById("infoConcesion").innerHTML += `
+          <div> 
+            <ul class="info">
+                    <h4><strong> 
+                        ${resultadosConcesion.data.obrasConcesiones.items[i].title}
+                    </strong></h4>
+                    
+                     <li>
+                        <span>Descripción:</span> ${resultadosConcesion.data.obrasConcesiones.items[i].contentSnippet}
+                     </li>
+                     <li>
+                        <b>Fecha de publicación:</b>${resultadosConcesion.data.obrasConcesiones.items[i].pubDate}
+                        </li>
+                     <li>
+                        <b>Link</b>:
+                        <a href=" ${resultadosConcesion.data.obrasConcesiones.items[i].link}">
+                            ${resultadosConcesion.data.obrasConcesiones.items[i].link}
+                     </a>
+                     </li>
+                     </ul>
+                </div>
+                `
+            }
+        }
+
+        
+    }
+        //5. Licitaciones de Compra Pública Innovadora
+        let resultadosCompraPublica; //Outside the function
+        let repetidor5=false;
+        function compraPublicaInnovadora() {
+
+            console.log(resultadosCompraPublica.data.compras.items)
+            repetidor5=!repetidor5;
+            document.getElementById("infoCompraPublica").innerHTML = "";
+            if (repetidor5) {
+                
+                document.getElementById("infoCompraPublica").innerHTML = "";
+                
+    
+    for (let i = 0; i < resultadosCompraPublica.data.compras.items.length; i++) {
+        
+        document.getElementById("infoCompraPublica").innerHTML += `
+        
+        
+        <div> 
+            <ul class="info">
+                <h4><strong> 
+                    ${resultadosCompraPublica.data.compras.items[i].title}
+                    </strong></h4>
+                    
+                    <li>
+                        <span>Descripción:</span> ${resultadosCompraPublica.data.compras.items[i].contentSnippet}
+                        </li>
+                        <li>
+                            <b>Fecha de publicación:</b>${resultadosCompraPublica.data.compras.items[i].pubDate}
+                            </li>
+                     <li>
+                        <b>Link</b>:
+                        <a href="${resultadosCompraPublica.data.obras.items[i].link}">
+                            ${resultadosCompraPublica.data.obras.items[i].link}
+                            </a>
+                            </li>
+                            </ul>
+                            </div>
+                            `
+                        }
+                    }
+                    
+                }
+
+                    </script>
+                    </body>
+
+</html>
